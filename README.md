@@ -45,17 +45,23 @@ By 6 developers (4 Front-End, 2 Back-End)
 - 오늘 이후 5일을 도착 날짜포 표시할 수 있습니다.
 
 &nbsp;
-### productstock
+### stocks
 - 상품의 날짜별 배송가능 수량을 저장합니다.
 - 상품과 날짜는 외부키를 가져옵니다.
 - 상품의 날짜별 수량이 없어지면 배송가능 날짜가 다음날로 바뀝니다.
 
+
+&nbsp;
+### sections
+- 섹션 정보를 저장합니다.
+
 &nbsp;
 ### themes
 - 테마 정보를 저장합니다.
+- 테마는 한 개의 섹션에 속하도록 외부키를 가져옵니다.
 
 &nbsp;
-### themeproducts
+### theme_products
 - 테마의 상품 구성을 저장합니다.
 - 상품은 외부키로 가져옵니다.
 

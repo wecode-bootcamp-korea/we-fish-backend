@@ -1,6 +1,6 @@
-from django.db import models
+from django.db    import models
 from order.models import Order
-from user.models import User
+from user.models  import User
 
 class Category(models.Model):
     name       = models.CharField(max_length = 100)
@@ -19,7 +19,7 @@ class Product(models.Model):
     delivery    = models.CharField(max_length = 100, null=True)
     caution     = models.CharField(max_length = 200, null=True)
     description = models.TextField(null=True)
-    imgage      = models.URLField(null=True)
+    imgage_url  = models.URLField(max_length = 2000, null=True)
     created_at  = models.DateTimeField(auto_now_add = True)
     updated_at  = models.DateTimeField(auto_now = True)
 
@@ -28,24 +28,29 @@ class Product(models.Model):
 
 class Date(models.Model):
     date    = models.DateField(auto_now = False)
-    day     = models.CharField(max_length = 50)
-    expired = models.BooleanField(null=True)
 
     class Meta:
         db_table = 'dates'
 
-class ProductStock(models.Model):
+class Stock(models.Model):
     product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
     date    = models.ForeignKey(Date, on_delete = models.SET_NULL, null=True)
     stock   = models.IntegerField(null = True)
 
     class Meta:
-        db_table = 'productstocks'
+        db_table = 'stocks'
+
+class Section(models.Model):
+    name = models.CharField(max_length = 100)
+
+    class Meta:
+        db_table = 'sections'
 
 class Theme(models.Model):
-    name    = models.CharField(max_length = 100)
-    tagline = models.CharField(max_length = 200)
-    image   = models.URLField(null=True)
+    name      = models.CharField(max_length = 100)
+    tagline   = models.CharField(max_length = 200)
+    section   = models.ForeignKey(Section, on_delete = models.SET_NULL, null=True)
+    image_url = models.URLField(max_length = 2000, null=True)
 
     class Meta:
         db_table = 'themes'
@@ -55,17 +60,16 @@ class ThemeProduct(models.Model):
     product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
 
     class Meta:
-        db_table = 'themeproducts'
+        db_table = 'theme_products'
 
 class Review(models.Model):
-    product    = models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
-    user       = models.ForeignKey('User', on_delete = models.SET_NULL, null=True)
+    product    = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
+    user       = models.ForeignKey(User, on_delete = models.SET_NULL, null=True)
     order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
     rate       = models.IntegerField(null=True)
     content    = models.TextField(null=True)
-    image      = models.URLField(null=True)
+    image_url  = models.URLField(max_length = 2000, null=True)
     created_at = models.DateTimeField(auto_now = True)
 
     class Meta:
         db_table = 'reviews'
-
