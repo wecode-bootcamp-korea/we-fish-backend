@@ -1,5 +1,5 @@
 from django.db    import models
-from order.models import Order
+#from order.models import Order
 from user.models  import User
 
 class Category(models.Model):
@@ -51,6 +51,8 @@ class Theme(models.Model):
     tagline   = models.CharField(max_length = 200)
     section   = models.ForeignKey(Section, on_delete = models.SET_NULL, null=True)
     image_url = models.URLField(max_length = 2000, null=True)
+    start_at  = models.DateField(null=True)
+    end_at    = models.DateField(null=True)
 
     class Meta:
         db_table = 'themes'
