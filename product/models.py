@@ -1,6 +1,6 @@
 from django.db import models
-#from order.models import Order
-#from user.models import User
+from order.models import Order
+from user.models import User
 
 class Category(models.Model):
     name       = models.CharField(max_length = 100)
@@ -58,9 +58,9 @@ class ThemeProduct(models.Model):
         db_table = 'themeproducts'
 
 class Review(models.Model):
-#    product    = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
-#    user       = models.ForeignKey('User', on_delete = models.SET_NULL, null=True)
-#    order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
+    product    = models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
+    user       = models.ForeignKey('User', on_delete = models.SET_NULL, null=True)
+    order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
     rate       = models.IntegerField(null=True)
     content    = models.TextField(null=True)
     image      = models.URLField(null=True)
