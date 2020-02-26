@@ -20,9 +20,9 @@ class SignUpView(View):
                 name             = data['name'],
                 postcode         = data['postcode'],
                 address          = data['address'],
-                detailed_address = data['detailed_address'],
+                detailed_address = data.get('detailed_address', None),
                 mobile           = data['mobile'],
-                agreement        = data['agreement']
+                agreement        = data.get('agreement', None),
             ).save()
 
             return HttpResponse(status = 200)
@@ -31,7 +31,7 @@ class SignUpView(View):
 
     def get(self, request):
         user_data = User.objects.values()
-        return JsonResponse({"users":list(users_data)}, status = 200)
+        return JsonResponse({"user":list(user_data)}, status = 200)
 
 class SignInView(View):
     def post(self, request):
