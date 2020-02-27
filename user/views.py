@@ -2,11 +2,12 @@ import json
 import bcrypt
 import jwt
 
-from .models import User
-from my_settings import SECRET_KEY
+from .models      import User
+from .utils       import login_required
+from my_settings  import SECRET_KEY
 
 from django.views import View
-from django.http import HttpResponse, JsonResponse
+from django.http  import HttpResponse, JsonResponse
 
 class SignUpView(View):
     def post(self, request):
@@ -26,11 +27,13 @@ class SignUpView(View):
             ).save()
 
             return HttpResponse(status = 200)
+
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
 
     def get(self, request):
         user_data = User.objects.values()
+        
         return JsonResponse({"user":list(user_data)}, status = 200)
 
 class SignInView(View):
@@ -44,6 +47,7 @@ class SignInView(View):
                     token = jwt.encode({"user":user.id}, SECRET_KEY['secret'], algorithm = 'HS256')
 
                     return JsonResponse({"token":token.decode('utf-8')}, status = 200)
+
                 return HttpResponse(status = 401)
 
             return HttpResponse(status = 401)
@@ -51,3 +55,16 @@ class SignInView(View):
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
 
+class ProfileView(View):
+    @login_required
+    def get(self, request):
+        user_profile = {
+            'id' : request.user.email,
+            'name' : request.user.name,
+            'mobile' : request.user.mobile,
+            'postcode' : request.user.postcode,
+            'address' : request.user.address,
+            'detailed_address': request.user.detailed_address,
+
+        }
+        return JsonResponse({"profiles":user_profile}, status = 200)
