@@ -33,11 +33,6 @@ class SignUpView(View):
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
 
-    def get(self,request):
-        user_data = User.objects.values()
-
-        return JsonResponse({"users":list(user_data)}, status = 200)
-
 class SignInView(View):
     def post(self, request):
         data = json.loads(request.body)
@@ -76,9 +71,7 @@ class ProfileView(View):
         try:
             data = json.loads(request.body)
             profile = User.objects.filter(id = request.user.id)
-
             profile.update(
-
                 name             = data['name'],
                 mobile           = data['mobile'],
                 postcode         = data['postcode'],
@@ -98,5 +91,3 @@ class ProfileView(View):
 
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status=400)
-
-
