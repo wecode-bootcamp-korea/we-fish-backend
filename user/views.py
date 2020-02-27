@@ -31,11 +31,6 @@ class SignUpView(View):
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
 
-    def get(self, request):
-        user_data = User.objects.values()
-        
-        return JsonResponse({"user":list(user_data)}, status = 200)
-
 class SignInView(View):
     def post(self, request):
         data = json.loads(request.body)
@@ -59,12 +54,12 @@ class ProfileView(View):
     @login_required
     def get(self, request):
         user_profile = {
-            'id' : request.user.email,
-            'name' : request.user.name,
-            'mobile' : request.user.mobile,
-            'postcode' : request.user.postcode,
-            'address' : request.user.address,
-            'detailed_address': request.user.detailed_address,
-
+            'id'               : request.user.email,
+            'name'             : request.user.name,
+            'mobile'           : request.user.mobile,
+            'postcode'         : request.user.postcode,
+            'address'          : request.user.address,
+            'detailed_address' : request.user.detailed_address,
         }
+
         return JsonResponse({"profiles":user_profile}, status = 200)

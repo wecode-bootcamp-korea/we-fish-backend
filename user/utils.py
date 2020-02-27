@@ -14,9 +14,9 @@ def login_required(func):
 
         if token:
             try:
-                decode = jwt.decode(token, secret, algorithms = ['HS256'])
-                user_id = decode.get('user', None)
-                user = User.objects.get(id = user_id)
+                decode       = jwt.decode(token, secret, algorithms = ['HS256'])
+                user_id      = decode.get('user', None)
+                user         = User.objects.get(id = user_id)
                 request.user = user
 
             except jwt.DecodeError:
@@ -27,5 +27,3 @@ def login_required(func):
         return JsonResponse({"message":"LOGIN_REQUIRED"}, status = 401)
 
     return wrapper
-
-
