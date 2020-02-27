@@ -80,12 +80,12 @@ class ProfileView(View):
             )
 
             password = data.get('password', None)
-            if password != None:
+            if password:
                 user_password = bcrypt.hashpw(data['password'].encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
-            profile = User.objects.filter(id = request.user.id)
-            profile.update(
-                    password = user_password
-                ).update()
+                profile = User.objects.filter(id = request.user.id)
+                profile.update(
+                        password = user_password
+                )
 
             return HttpResponse(status = 200)
 
