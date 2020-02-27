@@ -19,7 +19,7 @@ class Product(models.Model):
     delivery    = models.CharField(max_length = 100, null=True)
     caution     = models.CharField(max_length = 200, null=True)
     description = models.TextField(null=True)
-    imgage_url  = models.URLField(max_length = 2000, null=True)
+    image_url   = models.URLField(max_length = 2000, null=True)
     created_at  = models.DateTimeField(auto_now_add = True)
     updated_at  = models.DateTimeField(auto_now = True)
 
@@ -41,7 +41,8 @@ class Stock(models.Model):
         db_table = 'stocks'
 
 class Section(models.Model):
-    name = models.CharField(max_length = 100)
+    name    = models.CharField(max_length = 100)
+    tagline = models.CharField(max_length = 200, null=True)
 
     class Meta:
         db_table = 'sections'
@@ -67,7 +68,7 @@ class ThemeProduct(models.Model):
 class Review(models.Model):
     product    = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
     user       = models.ForeignKey(User, on_delete = models.SET_NULL, null=True)
-    order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
+#    order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
     rate       = models.IntegerField(null=True)
     content    = models.TextField(null=True)
     image_url  = models.URLField(max_length = 2000, null=True)
