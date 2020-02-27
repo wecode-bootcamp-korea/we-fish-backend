@@ -15,9 +15,11 @@ class SignUpView(View):
         try:
             if User.objects.filter(email = data['email']).exists():
                 return JsonResponse({"message":"Duplicated email"}, status = 400)
+
+            user_password = bcrypt.hashpw(data['password'].encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
             User(
                 email            = data['email'],
-                password         = bcrypt.hashpw(data['password'].encode('utf-8'),bcrypt.gensalt()).decode('utf-8'),
+                password         = user_password,
                 name             = data['name'],
                 postcode         = data['postcode'],
                 address          = data['address'],
@@ -30,6 +32,11 @@ class SignUpView(View):
 
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
+
+    def get(self,request):
+        user_data = User.objects.values()
+
+        return JsonResponse({"users":list(user_data)}, status = 200)
 
 class SignInView(View):
     def post(self, request):
@@ -63,3 +70,33 @@ class ProfileView(View):
         }
 
         return JsonResponse({"profiles":user_profile}, status = 200)
+
+    @login_required
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            profile = User.objects.filter(id = request.user.id)
+
+            profile.update(
+
+                name             = data['name'],
+                mobile           = data['mobile'],
+                postcode         = data['postcode'],
+                address          = data['address'],
+                detailed_address = data.get('detailed_address', None),
+            )
+
+            password = data.get('password', None)
+            if password != None:
+                user_password = bcrypt.hashpw(data['password'].encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
+            profile = User.objects.filter(id = request.user.id)
+            profile.update(
+                    password = user_password
+                ).update()
+
+            return HttpResponse(status = 200)
+
+        except KeyError:
+            return JsonResponse({"message":"INVALID_KEYS"}, status=400)
+
+
