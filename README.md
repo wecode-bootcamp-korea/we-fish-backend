@@ -6,7 +6,7 @@ By 6 developers (4 Front-End, 2 Back-End)
 
 
 # DB modeling
-![db_modeling](db_modeling_0225.png)
+![오늘회333_20200228_08_15](https://user-images.githubusercontent.com/58175076/75519012-9e1a7a00-5a45-11ea-95ff-abe66d71a85a.png)
 
 &nbsp;
 &nbsp;
@@ -31,13 +31,24 @@ By 6 developers (4 Front-End, 2 Back-End)
 &nbsp;
 ### categories
 - 상품 카테고리 정보를 저장합니다.
+- 카테고리 목록에 표시되는 카테고리인지 여부가 BOOLEAN 필드로 구분됩니다. 
 
 &nbsp;
 ### products
 - 상품의 정보를 저장합니다.
-- 카테고리를 외부키로 가집니다.
+- 카테고리와 MANY TO MANY 관계를 이룹니다.
 - 상세설명은 html 태그로 되어 있습니다.
 - 상품 등록일이 7일 이내일일 경우 신상품 카테고리로 구분됩니다.
+
+&nbsp;
+### products_categories
+- 상품과 카테고리의 관계정보를 저장합니다.
+- 상품과 카테고리는 외부키를 가져옵니다. 
+
+&nbsp;
+### sort_keywords
+- 상품의 정렬 순서를 저장합니다.
+- 연결 관계가 없는 별도의 테이블로 관리합니다.
 
 &nbsp;
 ### dates
@@ -45,10 +56,15 @@ By 6 developers (4 Front-End, 2 Back-End)
 - 오늘 이후 5일을 도착 날짜포 표시할 수 있습니다.
 
 &nbsp;
-### productstock
+### stocks
 - 상품의 날짜별 배송가능 수량을 저장합니다.
 - 상품과 날짜는 외부키를 가져옵니다.
 - 상품의 날짜별 수량이 없어지면 배송가능 날짜가 다음날로 바뀝니다.
+
+&nbsp;
+### sections
+- themes 의 상위 카테고리
+- 각 테마의 조합을 저장합니다.
 
 &nbsp;
 ### themes
