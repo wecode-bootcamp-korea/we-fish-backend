@@ -1,7 +1,7 @@
+import json
+
 from .models import Category
 from .models import Product
-from .models import Theme
-from .models import Review
 
 from django.views import View
 from django.http  import JsonResponse
@@ -25,14 +25,15 @@ class ProductView(View):
 
         return JsonResponse({'products':list(product_data)}, status = 200)
 
-class ThemeView(View):
+class SearchView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        if data['keyword'].exists():
+            keyword = data['keyword']
+
+            return JsonResponse({'message':'Let me find it'}, status = 200)
+
     def get(self, request):
-        theme_data = Theme.objects.values()
+        search_data = Product.objects.filter(name__icontains=keyword).values
 
-        return JsonResponse({'themes':list(theme_data)}, status = 200)
-
-class ReviewView(View):
-    def get(self, request):
-        review_data = Review.objects.values()
-
-        return JsonResponse({'reviews':list(review_data)}, status = 200)
+        return JsonResponse({'search_results':list(search_data)}, status = 200)
