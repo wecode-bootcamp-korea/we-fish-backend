@@ -6,7 +6,7 @@ By 6 developers (4 Front-End, 2 Back-End)
 
 
 # DB modeling
-![오늘회333_20200228_08_15](https://user-images.githubusercontent.com/58175076/75519012-9e1a7a00-5a45-11ea-95ff-abe66d71a85a.png)
+![image](https://user-images.githubusercontent.com/58175076/75522267-ee490a80-5a4c-11ea-881f-01827044d692.png)
 
 &nbsp;
 &nbsp;
