@@ -2,6 +2,7 @@ import json
 
 from .models import Category
 from .models import Product
+from .models import Theme
 
 from django.views import View
 from django.http  import JsonResponse
@@ -47,3 +48,9 @@ class SearchView(View):
         search_data = Product.objects.filter(name__icontains=self.keyword).values()
 
         return JsonResponse({'search_results':list(search_data)}, status = 200)
+
+class ThemeView(View):
+    def get(self, request):
+        theme_data = Theme.objects.values()
+
+        return JsonResponse({'themes':list(theme_data)}, status = 200)
