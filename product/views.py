@@ -99,7 +99,7 @@ class HotView(View):
 
         return JsonResponse({"hot":category_list}, status = 200)
 
-#낮은 가격순
+#낮은 가격순
 class AscendingPriceView(View):
     def get(self, request):
         product_data = Product.objects.order_by('price').values('category__name','id','image_url','name','price')
