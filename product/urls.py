@@ -1,5 +1,5 @@
 from django.urls import path
-from .views      import CategoryView, ProductListView, ProductView, ThemeView, ReviewView
+from .views      import CategoryView, ProductListView, ProductView, SearchView
 
 urlpatterns = [
     path('/category_list', CategoryView.as_view()),
