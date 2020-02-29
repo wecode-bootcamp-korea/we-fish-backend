@@ -44,6 +44,6 @@ class SearchView(View):
         return JsonResponse({'message':'상품을 검색중입니다.'}, status = 200)
 
     def get(self, request):
-        search_data = Product.objects.filter(name__icontains=self.keyword).values
+        search_data = Product.objects.filter(name__icontains=self.keyword).values()
 
         return JsonResponse({'search_results':list(search_data)}, status = 200)
