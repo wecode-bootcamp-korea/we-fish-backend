@@ -7,31 +7,23 @@ from django.http  import HttpResponse, JsonResponse
 class RateView(View):
     def get(self, request):
         product_data = Product.objects.order_by('-rate').values('category__name','id','image_url','name','price')
+        product_list = [{
+                'category'  : product['category__name'],
+                'id'        : product['id'],
+                'image'     : product['image_url'],
+                'name'      : product['name'],
+                'price'     : product['price']
 
-        product_list  = []
-        category_list = []
-        for product in product_data:
-            product_list.append(
-                {
-                    'category'  : product['category__name'],
-                    'id'        : product['id'],
-                    'image'     : product['image_url'],
-                    'name'      : product['name'],
-                    'price'     : product['price']
-                }
-            )
+                } for product in product_data ]
 
         categories = [category for category in Category.objects.values()]
-        for i in range(len(categories)):
-            category_list.append(
-                {
-                    categories[i]['name']:
-                              [
-                                  item for item in product_list
-                               if item['category'] == categories[i]['name']
-                              ]
-                }
-            )
+        category_list = [{
+                categories[category]['name']:
+                          [
+                              item for item in product_list
+                              if item['category'] == categories[category]['name']
+                          ]
+                } for category in range(len(categories)) ]
 
         return JsonResponse({"rate":category_list}, status = 200)
 
@@ -39,31 +31,23 @@ class RateView(View):
 class NewView(View):
     def get(self, request):
         product_data = Product.objects.order_by('-updated_at').values('category__name','id','image_url','name','price')
-
-        product_list  = []
-        category_list = []
-        for product in product_data:
-            product_list.append(
-                {
+        product_list = [{
                     'category'  : product['category__name'],
                     'id'        : product['id'],
                     'image'     : product['image_url'],
                     'name'      : product['name'],
                     'price'     : product['price']
-                }
-            )
+
+                    } for product in product_data ]
 
         categories = [category for category in Category.objects.values()]
-        for i in range(len(categories)):
-            category_list.append(
-                {
-                    categories[i]['name']:
+        category_list = [{
+                    categories[category]['name']:
                               [
                                   item for item in product_list
-                               if item['category'] == categories[i]['name']
+                                  if item['category'] == categories[category]['name']
                               ]
-                }
-            )
+                    } for category in range(len(categories)) ]
 
         return JsonResponse({"new":category_list}, status = 200)
 
@@ -71,31 +55,23 @@ class NewView(View):
 class HotView(View):
     def get(self, request):
         product_data = Product.objects.order_by('-sales').values('category__name','id','image_url','name','price')
-
-        product_list  = []
-        category_list = []
-        for product in product_data:
-            product_list.append(
-                {
+        product_list = [{
                     'category'  : product['category__name'],
                     'id'        : product['id'],
                     'image'     : product['image_url'],
                     'name'      : product['name'],
                     'price'     : product['price']
-                }
-            )
+
+                    } for product in product_data ]
 
         categories = [category for category in Category.objects.values()]
-        for i in range(len(categories)):
-            category_list.append(
-                {
-                    categories[i]['name']:
+        category_list = [{
+                    categories[category]['name']:
                               [
                                   item for item in product_list
-                               if item['category'] == categories[i]['name']
+                                  if item['category'] == categories[category]['name']
                               ]
-                }
-            )
+                    } for category in range(len(categories)) ]
 
         return JsonResponse({"hot":category_list}, status = 200)
 
@@ -103,31 +79,24 @@ class HotView(View):
 class AscendingPriceView(View):
     def get(self, request):
         product_data = Product.objects.order_by('price').values('category__name','id','image_url','name','price')
-
-        product_list  = []
-        category_list = []
-        for product in product_data:
-            product_list.append(
-                {
+        product_list = [{
                     'category'  : product['category__name'],
                     'id'        : product['id'],
                     'image'     : product['image_url'],
                     'name'      : product['name'],
                     'price'     : product['price']
-                }
-            )
+
+                    } for product in product_data ]
 
         categories = [category for category in Category.objects.values()]
-        for i in range(len(categories)):
-            category_list.append(
-                {
-                    categories[i]['name']:
+        category_list = [{
+                    categories[category]['name']:
                               [
                                   item for item in product_list
-                               if item['category'] == categories[i]['name']
+                                  if item['category'] == categories[category]['name']
                               ]
-                }
-            )
+
+                    } for category in range(len(categories)) ]
 
         return JsonResponse({"ascending_price":category_list}, status = 200)
 
@@ -135,30 +104,22 @@ class AscendingPriceView(View):
 class DescendingPriceView(View):
     def get(self, request):
         product_data = Product.objects.order_by('-price').values('category__name','id','image_url','name','price')
-
-        product_list  = []
-        category_list = []
-        for product in product_data:
-            product_list.append(
-                {
+        product_list = [{
                     'category'  : product['category__name'],
                     'id'        : product['id'],
                     'image'     : product['image_url'],
                     'name'      : product['name'],
                     'price'     : product['price']
-                }
-            )
+
+                    } for product in product_data ]
 
         categories = [category for category in Category.objects.values()]
-        for i in range(len(categories)):
-            category_list.append(
-                {
-                    categories[i]['name']:
+        category_list = [{
+                    categories[category]['name']:
                               [
                                   item for item in product_list
-                               if item['category'] == categories[i]['name']
+                               if item['category'] == categories[category]['name']
                               ]
-                }
-            )
+                    } for category in range(len(categories)) ]
 
         return JsonResponse({"descending_price":category_list}, status = 200)
