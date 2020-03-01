@@ -143,7 +143,7 @@ class ConfirmaionView(View):
 
                 if data['code'] == user.code:
 
-                    return JsonResponse({"message":"Verification Successed"}, status = 200)
+                    return JsonResponse({"message" : "Verification Succeed"}, status = 200)
 
                 user_data = Verification.objects.filter(mobile = data['mobile'])
                 user_data.update(
