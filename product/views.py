@@ -118,7 +118,7 @@ class DescendingPriceView(View):
                     categories[category]['name']:
                               [
                                   item for item in product_list
-                               if item['category'] == categories[category]['name']
+                                  if item['category'] == categories[category]['name']
                               ]
                     } for category in range(len(categories)) ]
 
