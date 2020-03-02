@@ -38,11 +38,11 @@ class SearchView(View):
 
             return JsonResponse(
                 {
-                    'message':'검색 결과가 없습니다. 다른 키워드로 검색해 주세요'
+                    'message':'No results. Please input another keyword.'
                  },
                 status = 200)
 
-        return JsonResponse({'message':'상품을 검색중입니다.'}, status = 200)
+        return JsonResponse({'message':'Okay. Let me find it.'}, status = 200)
 
     def get(self, request):
         search_data = Product.objects.filter(name__icontains=self.keyword).values()
