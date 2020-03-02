@@ -105,12 +105,21 @@ class VerificationView(View):
         verification_code = ""
         for i in range(digit):
             verification_code += random.choice(string_pool)
+
         # 휴대폰 번호 및 인증코드 저장
-        Verification(
+        user_data = Verification.objects.filter(mobile = data['mobile'])
+        if user_data.exists:
+            user_data.update(
+                code = verification_code,
+                count = 0
+            )
+
+        else:
+            Verification(
                 mobile  =  data['mobile'],
                 code    =  verification_code,
                 count   = 0
-        ).save()
+            ).save()
 
         # 인증코드 발송 요청
         headers = {
