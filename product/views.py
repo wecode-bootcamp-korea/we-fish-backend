@@ -20,15 +20,20 @@ class ThemeView(View):
 
 class ReviewWriteView(View):
     def post(self, request):
-        data = json.loads(request.body)
+        try :
+            data = json.loads(request.body)
 
-        Review(
-            product_id = data['product_id'],
-            user_id    = data['user_id'],
-#            order_id   = data['order_id'],
-            rate       = data['rate'],
-            content    = data['content'],
-            image_url  = data['image']
-        ).save()
+            Review(
+                product_id = data['product_id'],
+                user_id    = data['user_id'],
+#                order_id   = data['order_id'],
+                rate       = data['rate'],
+                content    = data['content'],
+                image_url  = data['image']
+            ).save()
 
-        return JsonResponse({'message':'Okay'}, status = 200)
+            return JsonResponse({"message':'OKAY"}, status = 200)
+
+        except KeyError:
+
+            return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
