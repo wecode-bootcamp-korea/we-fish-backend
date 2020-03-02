@@ -20,12 +20,17 @@ class ThemeView(View):
 
 class SearchView(View):
     def get(self, request, keyword):
-        search_data = Product.objects.filter(name__icontains=keyword).values('name', 'price', 'image_url')
-        if not search_data:
+        try:
+            search_data = Product.objects.filter(name__icontains=keyword).values('name', 'price', 'image_url')
+            if not search_data:
 
-            return JsonResponse(
-                {
-                    'message':'No Results. Please input another word.'
-                },
-                status = 200)
-        return JsonResponse({'search_results':list(search_data)}, status = 200)
+                return JsonResponse(
+                    {
+                        "message":"No Results. Please input another word."
+                    },
+                    status = 200)
+            return JsonResponse({"search_results":list(search_data)}, status = 200)
+
+        except KeyError:
+
+            return JsonResponse({"message":"INVALID_KEY"})
