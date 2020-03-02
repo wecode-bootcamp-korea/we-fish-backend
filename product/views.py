@@ -19,3 +19,11 @@ class ThemeView(View):
         theme_data = Theme.objects.values()
 
         return JsonResponse({'themes':list(theme_data)}, status = 200)
+
+class ProductView(View):
+    def get(self, request):
+        product_id = request.GET.get('product_id', None)
+        product_data = Product.objects.filter(id=product_id).values()
+        print(request.GET)
+
+        return JsonResponse({'product_data':list(product_data)}, status = 200)
