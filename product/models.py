@@ -1,8 +1,12 @@
-from django.db    import models
 from user.models  import User
+# from order.models import Order
+
+from django.db    import models
+
 
 class Category(models.Model):
-    name       = models.CharField(max_length = 100)
+    name             = models.CharField(max_length = 100)
+    is_real_category = models.BooleanField(null = True)
 
     class Meta:
         db_table = 'categories'
@@ -11,7 +15,7 @@ class Product(models.Model):
     name        = models.CharField(max_length = 100)
     tagline     = models.CharField(max_length = 200, null=True)
     price       = models.DecimalField(max_digits = 10, decimal_places = 2, null=True)
-    category    = models.ForeignKey(Category, on_delete = models.SET_NULL, null=True)
+    category    = models.ManyToManyField(Category, through = 'ProductCategory')
     unit        = models.CharField(max_length = 100, null=True)
     package     = models.CharField(max_length = 100, null=True)
     origin      = models.CharField(max_length = 100, null=True)
@@ -25,8 +29,21 @@ class Product(models.Model):
     class Meta:
         db_table = 'products'
 
+class ProductCategory(models.Model):
+    product  = models.ForeignKey(Product, on_delete = models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete = models.CASCADE, null=True)
+
+    class Meta:
+        db_table = 'products_categories'
+
+class SortKeyword(models.Model):
+    name= models.CharField(max_length = 200, null = True)
+
+    class Meta:
+        db_table = 'sort_keywords'
+
 class Date(models.Model):
-    date    = models.DateField(auto_now = False)
+    date = models.DateField(auto_now = False)
 
     class Meta:
         db_table = 'dates'
