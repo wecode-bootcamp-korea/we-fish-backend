@@ -24,4 +24,4 @@ class ProductView(View):
     def get(self, request, product_id):
         product_data = Product.objects.filter(id=product_id).values()
 
-        return JsonResponse({'product_data':list(product_data)}, status = 200)
+        return JsonResponse({'product_data':product_data}, status = 200)
