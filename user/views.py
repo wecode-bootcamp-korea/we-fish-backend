@@ -97,61 +97,56 @@ class ProfileView(View):
 
 class VerificationView(View):
     def post(self, request):
-        data = json.loads(request.body)
+        try:
+            data = json.loads(request.body)
+            mobile = data['mobile']
+            # 6자리 인증코드 생성
+            digit = 6
+            verification_code = ''.join(random.choice(string.digits) for x in range(digit))
 
-        # 6자리 인증코드 생성
-        digit = 6
-        string_pool = string.digits
-        verification_code = ""
-        for i in range(digit):
-            verification_code += random.choice(string_pool)
+            # 휴대폰 번호 및 인증코드 저장
+            user_data = Verification.objects.filter(mobile = mobile)
+            if user_data.exists:
+                user_data.update(
+                    code = verification_code,
+                    count = 0
+                )
+            else:
+                Verification(
+                    mobile  = mobile,
+                    code    = verification_code,
+                    count   = 0
+                ).save()
 
-        # 휴대폰 번호 및 인증코드 저장
-        user_data = Verification.objects.filter(mobile = data['mobile'])
-        if user_data.exists:
-            user_data.update(
-                code = verification_code,
-                count = 0
-            )
-
-        else:
-            Verification(
-                mobile  =  data['mobile'],
-                code    =  verification_code,
-                count   = 0
-            ).save()
-
-        # 인증코드 발송 요청
-        headers = {
-            "Content-Type"          : "application/json; charset=utf-8",
-            "x-ncp-auth-key"        : SMS['Access_Key'],
-            "x-ncp-service-secret"  : SMS['Service_Secret'],
-        }
-
-        payload = {
-            "type"          : "SMS",
-            "contentType"   : "COMM",
-            "countryCode"   : "",
-            "from"          : SMS['From'],
-            "to"            : [
-                                data['mobile']
-                              ],
-            "content"       : f"[we-fish] 인증 코드 [{verification_code}]를 입력해주세요."
+            # 인증코드 발송 요청
+            headers = {
+                "Content-Type"          : "application/json; charset=utf-8",
+                "x-ncp-auth-key"        : SMS['Access_Key'],
+                "x-ncp-service-secret"  : SMS['Service_Secret']
             }
 
-        requests.post(SMS['URL'], json = payload, headers = headers)
+            payload = {
+                "type"          : "SMS",
+                "contentType"   : "COMM",
+                "countryCode"   : "",
+                "from"          : SMS['From'],
+                "to"            : [ mobile ],
+                "content"       : f"[we-fish] 인증 코드 [{verification_code}]를 입력해주세요."
+            }
 
-        return HttpResponse(status =  200)
+            requests.post(SMS['URL'], json = payload, headers = headers)
+            return HttpResponse(status =  200)
 
-class ConfirmaionView(View):
+        except  KeyError:
+            return JsonResponse({"message" : "INVALID_KEYS"}, status = 400)
+
+class ConfirmationView(View):
     def post(self, request):
         data = json.loads(request.body)
         try:
             user = Verification.objects.get(mobile = data['mobile'])
             if int(user.count) < 3:
-
                 if data['code'] == user.code:
-
                     return JsonResponse({"message" : "Verification Succeed"}, status = 200)
 
                 user_data = Verification.objects.filter(mobile = data['mobile'])
