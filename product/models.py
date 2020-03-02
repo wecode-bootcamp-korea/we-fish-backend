@@ -1,6 +1,8 @@
-from django.db    import models
-from order.models import Order
 from user.models  import User
+# from order.models import Order
+
+from django.db    import models
+
 
 class Category(models.Model):
     name             = models.CharField(max_length = 100)
@@ -41,7 +43,7 @@ class SortKeyword(models.Model):
         db_table = 'sort_keywords'
 
 class Date(models.Model):
-    date    = models.DateField(auto_now = False)
+    date = models.DateField(auto_now = False)
 
     class Meta:
         db_table = 'dates'
@@ -82,8 +84,11 @@ class ThemeProduct(models.Model):
 class Review(models.Model):
     product    = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
     user       = models.ForeignKey(User, on_delete = models.SET_NULL, null=True)
-    order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
+    # order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
     rate       = models.IntegerField(null=True)
     content    = models.TextField(null=True)
     image_url  = models.URLField(max_length = 2000, null=True)
     created_at = models.DateTimeField(auto_now = True)
+    
+    class Meta:
+        db_table = 'reviews'
