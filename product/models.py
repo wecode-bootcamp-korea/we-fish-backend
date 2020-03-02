@@ -6,7 +6,7 @@ from django.db    import models
 
 class Category(models.Model):
     name             = models.CharField(max_length = 100)
-    is_real_category = models.BooleanField(null = True)
+    is_real_category = models.BooleanField(null=True)
 
     class Meta:
         db_table = 'categories'
@@ -37,7 +37,7 @@ class ProductCategory(models.Model):
         db_table = 'products_categories'
 
 class SortKeyword(models.Model):
-    name= models.CharField(max_length = 200, null = True)
+    name = models.CharField(max_length = 200, null=True)
 
     class Meta:
         db_table = 'sort_keywords'
