@@ -89,6 +89,6 @@ class Review(models.Model):
     content    = models.TextField(null=True)
     image_url  = models.URLField(max_length = 2000, null=True)
     created_at = models.DateTimeField(auto_now = True)
-    
+
     class Meta:
         db_table = 'reviews'

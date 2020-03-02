@@ -1,8 +1,6 @@
 import json
 
-from .models import Category
-from .models import Product
-from .models import Theme
+from .models import Category, Theme, Review
 
 from django.views import View
 from django.http  import JsonResponse
@@ -19,3 +17,18 @@ class ThemeView(View):
         theme_data = Theme.objects.values()
 
         return JsonResponse({'themes':list(theme_data)}, status = 200)
+
+class ReviewWriteView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+
+        Review(
+            product_id = data['product_id'],
+            user_id    = data['user_id'],
+#            order_id   = data['order_id'],
+            rate       = data['rate'],
+            content    = data['content'],
+            image_url  = data['image']
+        ).save()
+
+        return JsonResponse({'message':'Okay'}, status = 200)
