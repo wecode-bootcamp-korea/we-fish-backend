@@ -14,15 +14,9 @@ class CategoryView(View):
 
         return JsonResponse({'category_list':list(category_data)}, status = 200)
 
-class ProductListView(View):
-    def get(self, request):
-        productlist_data = Product.objects.values()
-
-        return JsonResponse({'product_list':list(productlist_data)}, status = 200)
-
 class ProductView(View):
     def get(self, request):
-        product_data = Product.objects.values()
+        product_data = Product.objects.values('name', 'tagline', 'price', 'unit', 'package', 'origin', 'delivery', 'caution', 'image_url')
 
         return JsonResponse({'products':list(product_data)}, status = 200)
 
