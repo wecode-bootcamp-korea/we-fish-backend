@@ -1,10 +1,10 @@
 import requests
 import pandas as pd
 
-from bs4 import BeautifulSoup
-from selenium import webdriver
+from bs4         import BeautifulSoup
+from selenium    import webdriver
 
-driver = webdriver.Chrome('/Users/kay/Downloads/chromedriver')
+driver = webdriver.Chrome()
 
 req = requests.get('https://www.onul-hoi.com/m/new_welcome')
 html = req.text
