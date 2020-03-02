@@ -1,3 +1,4 @@
+from django.views import View
 import json
 
 from .models import Category
