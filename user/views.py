@@ -169,8 +169,8 @@ class AskView(View):
         data = json.loads(request.body)
         Ask(
             title   = data['title'],
-            author  = data['author'],
-            email   = data['email'],
+            author  = request.user.name,
+            email   = request.user.email,
             content = data['content']
         ).save()
 
@@ -178,7 +178,7 @@ class AskView(View):
 
     @login_required
     def get(self, request):
-        data = Ask.objects.values()
+        data = Ask.objects.filter(email = request.user.email).values()
 
         return JsonResponse({"Ask" : list(data)}, status = 200)
 

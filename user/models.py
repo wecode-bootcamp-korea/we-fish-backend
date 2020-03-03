@@ -29,5 +29,5 @@ class Ask(models.Model):
     email   = models.CharField(max_length = 100, null = True)
     content = models.TextField(max_length = 2000, null = True)
 
-    class Meat:
+    class Meta:
         db_table = 'asks'
