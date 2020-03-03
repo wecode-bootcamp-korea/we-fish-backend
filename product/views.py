@@ -42,3 +42,15 @@ class DetailView(View):
         product_data = Product.objects.filter(id=product_id).values()
 
         return JsonResponse({'product_data':product_data}, status = 200)
+
+class SearchView(View):
+    def get(self, request):
+        search_word = request.GET.get('keyword', '')
+        try:
+            search_data = Product.objects.filter(name__icontains=search_word).values('name', 'price', 'image_url')
+            if not search_data:
+                return JsonResponse({"message":"No Results."}, status = 200)
+            return JsonResponse({"search_results":list(search_data)}, status = 200)
+
+        except KeyError:
+            return JsonResponse({"message":"INVALID_KEY"})
