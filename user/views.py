@@ -182,3 +182,36 @@ class AskView(View):
 
         return JsonResponse({"Ask" : list(data)}, status = 200)
 
+
+class AskEditView(View):
+    @login_required
+    def get(self, request, id):
+        user = Ask.objects.filter(id = id).values()
+
+        return JsonResponse({"ask_list" : list(user)}, status = 200)
+
+    @login_required
+    def post(self, request, id):
+        data = json.loads(request.body)
+        user = Ask.objects.filter(id = id).values()
+        user.update(
+            title   = data.get('title', None),
+            author  = request.user.name,
+            email   = request.user.email,
+            content = data.get('content', None)
+        )
+
+        return HttpResponse(status = 200)
+
+    @login_required
+    def delete(self, request, id):
+        user = Ask.objects.filter(id = id)
+        user.delete()
+
+        return HttpResponse(status = 200)
+
+
+
+
+
+
