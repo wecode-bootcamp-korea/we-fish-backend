@@ -1,5 +1,3 @@
-import json
-
 from .models import Category, Theme, Product
 
 from django.views import View
@@ -18,6 +16,12 @@ class ThemeView(View):
 
         return JsonResponse({'themes':list(theme_data)}, status = 200)
 
+class DetailView(View):
+    def get(self, request, product_id):
+        product_data = Product.objects.filter(id=product_id).values()
+
+        return JsonResponse({'product_data':product_data}, status = 200)
+
 class SearchView(View):
     def get(self, request, keyword):
         try:
@@ -26,11 +30,10 @@ class SearchView(View):
 
                 return JsonResponse(
                     {
-                        "message":"No Results. Please input another word."
+                        "message":"No Results."
                     },
                     status = 200)
             return JsonResponse({"search_results":list(search_data)}, status = 200)
 
         except KeyError:
-
             return JsonResponse({"message":"INVALID_KEY"})

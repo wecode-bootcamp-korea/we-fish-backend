@@ -14,3 +14,11 @@ class User(models.Model):
 
     class Meta:
         db_table = 'users'
+
+class Verification(models.Model):
+    mobile  = models.CharField(max_length = 50, null = True)
+    code    = models.CharField(max_length = 20, null = True)
+    count   = models.CharField(max_length = 20, null = True)
+
+    class Meta:
+        db_table = 'verifications'
