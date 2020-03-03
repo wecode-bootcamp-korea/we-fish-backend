@@ -23,9 +23,10 @@ class DetailView(View):
         return JsonResponse({'product_data':product_data}, status = 200)
 
 class SearchView(View):
-    def get(self, request, keyword):
+    def get(self, request):
+        search_word = request.GET.get('keyword', '')
         try:
-            search_data = Product.objects.filter(name__icontains=keyword).values('name', 'price', 'image_url')
+            search_data = Product.objects.filter(name__icontains=search_word).values('name', 'price', 'image_url')
             if not search_data:
 
                 return JsonResponse(
