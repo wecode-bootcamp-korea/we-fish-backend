@@ -3,7 +3,7 @@ import json
 from .models import Category, Theme, Review, Product
 
 from django.views import View
-from django.http  import JsonResponse
+from django.http  import JsonResponse, HttpResponse
 
 
 class CategoryView(View):
@@ -32,10 +32,9 @@ class ReviewView(View):
                 image_url  = data['image']
             ).save()
 
-            return JsonResponse({"message':'OKAY"}, status = 200)
+            return HttpResponse(status = 200)
 
         except KeyError:
-
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
 
 class DetailView(View):
