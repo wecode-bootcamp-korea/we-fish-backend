@@ -22,3 +22,12 @@ class Verification(models.Model):
 
     class Meta:
         db_table = 'verifications'
+
+class Ask(models.Model):
+    title   = models.CharField(max_length = 100, null = True)
+    author  = models.CharField(max_length = 50, null = True)
+    email   = models.CharField(max_length = 100, null = True)
+    content = models.TextField(max_length = 2000, null = True)
+
+    class Meat:
+        db_table = 'asks'
