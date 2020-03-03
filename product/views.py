@@ -59,11 +59,14 @@ class ProductListView(View):
 class SearchView(View):
     def get(self, request):
         search_word = request.GET.get('keyword', '')
+        if search_word == '':
+            return JsonResponse({"message":"Bad Request"}, status = 400)
+
+        search_data = Product.objects.filter(name__icontains=search_word).values('id', 'name', 'price', 'image_url')
         try:
-            search_data = Product.objects.filter(name__icontains=search_word).values('name', 'price', 'image_url')
-            if not search_data:
-                return JsonResponse({"message":"No Results."}, status = 200)
-            return JsonResponse({"search_results":list(search_data)}, status = 200)
+            if search_data :
+                return JsonResponse({"search_results":list(search_data)}, status = 200)
+            return JsonResponse({"message":"No Results."}, status = 200)
 
         except KeyError:
-            return JsonResponse({"message":"INVALID_KEY"})
+            return JsonResponse({"message":"INVALID_KEY"}, status = 400)
