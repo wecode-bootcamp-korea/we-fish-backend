@@ -46,7 +46,6 @@ class DetailView(View):
 class SearchView(View):
     def get(self, request):
         search_word = request.GET.get('keyword', '')
-
         if search_word == '':
             return JsonResponse({"message":"Bad Request"}, status = 400)
 
