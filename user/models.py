@@ -8,7 +8,7 @@ class User(models.Model):
     address          = models.CharField(max_length = 300)
     detailed_address = models.CharField(max_length = 300, null = True)
     mobile           = models.CharField(max_length = 50)
-    agreement        = models.BooleanField(null = True)     #이용약관 동의여부
+    agreement        = models.BooleanField(null = True)
     created_at       = models.DateTimeField(auto_now_add = True)
     updated_at       = models.DateTimeField(auto_now = True)
 

@@ -81,7 +81,6 @@ class ProfileView(View):
                 address          = data['address'],
                 detailed_address = data.get('detailed_address', None),
             )
-
             password = data.get('password', None)
             if password:
                 user_password = bcrypt.hashpw(data['password'].encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
@@ -136,6 +135,7 @@ class VerificationView(View):
             }
 
             requests.post(SMS['URL'], json = payload, headers = headers)
+
             return HttpResponse(status =  200)
 
         except  KeyError:
@@ -209,9 +209,3 @@ class AskEditView(View):
         user.delete()
 
         return HttpResponse(status = 200)
-
-
-
-
-
-

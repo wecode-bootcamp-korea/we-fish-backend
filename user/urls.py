@@ -1,5 +1,5 @@
-from django.urls import path
 from .views import SignUpView, SignInView, ProfileView, VerificationView, ConfirmationView, AskView, AskEditView
+from django.urls import path
 
 urlpatterns = [
     path('',SignUpView.as_view()),
