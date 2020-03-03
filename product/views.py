@@ -47,8 +47,8 @@ class SearchView(View):
     def get(self, request):
         search_word = request.GET.get('keyword', '')
         try:
-            search_data = Product.objects.filter(name__icontains=search_word).values('name', 'price', 'image_url')
-            if not search_data:
+            search_data = Product.objects.filter(name__icontains=search_word).values('id', 'name', 'price', 'image_url')
+            if not search_data or search_word == '':
                 return JsonResponse({"message":"No Results."}, status = 200)
             return JsonResponse({"search_results":list(search_data)}, status = 200)
 
