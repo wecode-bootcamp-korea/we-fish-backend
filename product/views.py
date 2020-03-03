@@ -29,7 +29,7 @@ class DetailView(View):
 
 class ProductListView(View):
     def get(self, request):
-        category = request.GET.get('category', 1)
+        category = request.GET.get('category', None)
         query = request.GET.get('query', 'price')
         product_data = Product.objects.prefetch_related('category').filter(category__id = category).order_by(query)
         product_list = [{
