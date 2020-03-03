@@ -35,7 +35,8 @@ class ProductCategory(models.Model):
         db_table = 'products_categories'
 
 class SortKeyword(models.Model):
-    name = models.CharField(max_length = 200, null=True)
+    name   = models.CharField(max_length = 200, null = True)
+    action = models.CharField(max_length = 100, null = True)
 
     class Meta:
         db_table = 'sort_keywords'
