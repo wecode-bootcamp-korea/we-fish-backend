@@ -1,10 +1,9 @@
 import json
 
-from .models import Category, Theme, Review, Product
+from .models import Category, Theme, Review, Product, ProductCategory
 
 from django.views import View
-from django.http  import JsonResponse, HttpResponse
-
+from django.http  import HttpResponse, JsonResponse
 
 class CategoryView(View):
     def get(self, request):
@@ -42,6 +41,20 @@ class DetailView(View):
         product_data = Product.objects.filter(id=product_id).values()
 
         return JsonResponse({'product_data':product_data}, status = 200)
+
+class ProductListView(View):
+    def get(self, request):
+        category = request.GET.get('category', None)
+        query = request.GET.get('query', 'price')
+        product_data = Product.objects.prefetch_related('category').filter(category__id = category).order_by(query)
+        product_list = [{
+                'id'             : product.id,
+                'image'          : product.image_url,
+                'name'           : product.name,
+                'price'          : product.price
+                } for product in product_data ]
+
+        return JsonResponse({"data" : product_list}, status = 200)
 
 class SearchView(View):
     def get(self, request):

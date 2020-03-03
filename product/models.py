@@ -34,12 +34,6 @@ class ProductCategory(models.Model):
     class Meta:
         db_table = 'products_categories'
 
-class SortKeyword(models.Model):
-    name = models.CharField(max_length = 200, null=True)
-
-    class Meta:
-        db_table = 'sort_keywords'
-
 class Date(models.Model):
     date = models.DateField(auto_now = False)
 
