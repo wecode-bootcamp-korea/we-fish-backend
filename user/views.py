@@ -1,10 +1,13 @@
 import json
 import bcrypt
 import jwt
+import requests
+import random
+import string
 
-from .models      import User
+from .models      import User, Verification
 from .utils       import login_required
-from my_settings  import SECRET_KEY
+from my_settings  import SECRET_KEY, SMS
 
 from django.views import View
 from django.http  import HttpResponse, JsonResponse
@@ -91,3 +94,69 @@ class ProfileView(View):
 
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status=400)
+
+class VerificationView(View):
+    def post(self, request):
+        try:
+            data = json.loads(request.body)
+            mobile = data['mobile']
+            # 6자리 인증코드 생성
+            digit = 6
+            verification_code = ''.join(random.choice(string.digits) for x in range(digit))
+
+            # 휴대폰 번호 및 인증코드 저장
+            user_data = Verification.objects.filter(mobile = mobile)
+            if user_data.exists:
+                user_data.update(
+                    code = verification_code,
+                    count = 0
+                )
+            else:
+                Verification(
+                    mobile  = mobile,
+                    code    = verification_code,
+                    count   = 0
+                ).save()
+
+            # 인증코드 발송 요청
+            headers = {
+                "Content-Type"          : "application/json; charset=utf-8",
+                "x-ncp-auth-key"        : SMS['Access_Key'],
+                "x-ncp-service-secret"  : SMS['Service_Secret']
+            }
+
+            payload = {
+                "type"          : "SMS",
+                "contentType"   : "COMM",
+                "countryCode"   : "",
+                "from"          : SMS['From'],
+                "to"            : [ mobile ],
+                "content"       : f"[we-fish] 인증 코드 [{verification_code}]를 입력해주세요."
+            }
+
+            requests.post(SMS['URL'], json = payload, headers = headers)
+            return HttpResponse(status =  200)
+
+        except  KeyError:
+            return JsonResponse({"message" : "INVALID_KEYS"}, status = 400)
+
+class ConfirmationView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        try:
+            user = Verification.objects.get(mobile = data['mobile'])
+            if int(user.count) < 3:
+                if data['code'] == user.code:
+                    return JsonResponse({"message" : "Verification Succeed"}, status = 200)
+
+                user_data = Verification.objects.filter(mobile = data['mobile'])
+                user_data.update(
+                    count = int(user.count) + 1
+                )
+
+                return JsonResponse({"message" : "Try Again"}, status = 401)
+
+            return JsonResponse({"message" : "Verification Failed"}, status = 401)
+
+        except  KeyError:
+            return JsonResponse({"message" : "INVALID_KEYS"}, status = 400)

@@ -1,6 +1,6 @@
 import json
 
-from .models import Category, Theme, Review
+from .models import Category, Theme, Review, Product
 
 from django.views import View
 from django.http  import JsonResponse
@@ -18,9 +18,9 @@ class ThemeView(View):
 
         return JsonResponse({'themes':list(theme_data)}, status = 200)
 
-class ReviewWriteView(View):
+class ReviewView(View):
     def post(self, request):
-        try :
+        try:
             data = json.loads(request.body)
 
             Review(
@@ -37,3 +37,9 @@ class ReviewWriteView(View):
         except KeyError:
 
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
+
+class DetailView(View):
+    def get(self, request, product_id):
+        product_data = Product.objects.filter(id=product_id).values()
+
+        return JsonResponse({'product_data':product_data}, status = 200)

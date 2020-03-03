@@ -1,8 +1,6 @@
 from user.models  import User
 # from order.models import Order
-
 from django.db    import models
-
 
 class Category(models.Model):
     name             = models.CharField(max_length = 100)
