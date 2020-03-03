@@ -28,12 +28,7 @@ class SearchView(View):
         try:
             search_data = Product.objects.filter(name__icontains=search_word).values('name', 'price', 'image_url')
             if not search_data:
-
-                return JsonResponse(
-                    {
-                        "message":"No Results."
-                    },
-                    status = 200)
+                return JsonResponse({"message":"No Results."}, status = 200)
             return JsonResponse({"search_results":list(search_data)}, status = 200)
 
         except KeyError:
