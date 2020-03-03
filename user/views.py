@@ -5,7 +5,7 @@ import requests
 import random
 import string
 
-from .models      import User, Verification
+from .models      import User, Verification, Ask
 from .utils       import login_required
 from my_settings  import SECRET_KEY, SMS
 
@@ -100,6 +100,7 @@ class VerificationView(View):
         try:
             data = json.loads(request.body)
             mobile = data['mobile']
+
             # 6자리 인증코드 생성
             digit = 6
             verification_code = ''.join(random.choice(string.digits) for x in range(digit))
@@ -160,3 +161,24 @@ class ConfirmationView(View):
 
         except  KeyError:
             return JsonResponse({"message" : "INVALID_KEYS"}, status = 400)
+
+
+class AskView(View):
+    @login_required
+    def post(self, request):
+        data = json.loads(request.body)
+        Ask(
+            title   = data['title'],
+            author  = data['author'],
+            email   = data['email'],
+            content = data['content']
+        ).save()
+
+        return HttpResponse(status = 200)
+
+    @login_required
+    def get(self, request):
+        data = Ask.objects.values()
+
+        return JsonResponse({"Ask" : list(data)}, status = 200)
+
