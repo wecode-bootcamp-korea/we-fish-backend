@@ -20,7 +20,7 @@ class ThemeView(View):
 
         return JsonResponse({'themes':list(theme_data)}, status = 200)
 
-class ProductView(View):
+class DetailView(View):
     def get(self, request, product_id):
         product_data = Product.objects.filter(id=product_id).values()
 
