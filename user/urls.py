@@ -1,5 +1,13 @@
+from .views import(
+    SignUpView,
+    SignInView,
+    ProfileView,
+    VerificationView,
+    ConfirmationView,
+    AskView,
+    AskEditView
+)
 from django.urls import path
-from .views import SignUpView, SignInView, ProfileView, VerificationView, ConfirmationView, KakaoView
 
 urlpatterns = [
     path('',SignUpView.as_view()),
@@ -8,5 +16,7 @@ urlpatterns = [
     path('/profile', ProfileView.as_view()),
     path('/verify' , VerificationView.as_view()),
     path('/confirm', ConfirmationView.as_view()),
+    path('/ask', AskView.as_view()),
+    path('/ask/<int:inquiry_id>', AskEditView.as_view()),
     path('/kakao', KakaoView.as_view())
 ]

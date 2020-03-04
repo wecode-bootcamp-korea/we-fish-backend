@@ -5,7 +5,7 @@ import requests
 import random
 import string
 
-from .models      import User, Verification
+from .models      import User, Verification, Ask
 from .utils       import login_required
 from my_settings  import SECRET_KEY, SMS
 
@@ -120,7 +120,6 @@ class ProfileView(View):
                 address          = data['address'],
                 detailed_address = data.get('detailed_address', None),
             )
-
             password = data.get('password', None)
             if password:
                 user_password = bcrypt.hashpw(data['password'].encode('utf-8'),bcrypt.gensalt()).decode('utf-8')
@@ -139,11 +138,10 @@ class VerificationView(View):
         try:
             data = json.loads(request.body)
             mobile = data['mobile']
-            # 6자리 인증코드 생성
+
             digit = 6
             verification_code = ''.join(random.choice(string.digits) for x in range(digit))
 
-            # 휴대폰 번호 및 인증코드 저장
             user_data = Verification.objects.filter(mobile = mobile)
             if user_data.exists:
                 user_data.update(
@@ -157,7 +155,6 @@ class VerificationView(View):
                     count   = 0
                 ).save()
 
-            # 인증코드 발송 요청
             headers = {
                 "Content-Type"          : "application/json; charset=utf-8",
                 "x-ncp-auth-key"        : SMS['Access_Key'],
@@ -170,10 +167,11 @@ class VerificationView(View):
                 "countryCode"   : "",
                 "from"          : SMS['From'],
                 "to"            : [ mobile ],
-                "content"       : f"[we-fish] 인증 코드 [{verification_code}]를 입력해주세요."
+                "content"       : f"[we_fish] 인증 코드 [{verification_code}]를 입력해주세요."
             }
 
             requests.post(SMS['URL'], json = payload, headers = headers)
+
             return HttpResponse(status =  200)
 
         except  KeyError:
@@ -199,3 +197,51 @@ class ConfirmationView(View):
 
         except  KeyError:
             return JsonResponse({"message" : "INVALID_KEYS"}, status = 400)
+
+
+class AskView(View):
+    @login_required
+    def post(self, request):
+        data = json.loads(request.body)
+        Ask(
+            title   = data['title'],
+            author  = request.user.name,
+            email   = request.user.email,
+            content = data['content']
+        ).save()
+
+        return HttpResponse(status = 200)
+
+    @login_required
+    def get(self, request):
+        data = Ask.objects.filter(email = request.user.email).values()
+
+        return JsonResponse({"Ask" : list(data)}, status = 200)
+
+
+class AskEditView(View):
+    @login_required
+    def get(self, request, inquiry_id):
+        user = Ask.objects.filter(id = inquiry_id).values()
+
+        return JsonResponse({"ask_list" : list(user)}, status = 200)
+
+    @login_required
+    def post(self, request, inquiry_id):
+        data = json.loads(request.body)
+        user = Ask.objects.filter(id = inquiry_id).values()
+        user.update(
+            title   = data.get('title', None),
+            author  = request.user.name,
+            email   = request.user.email,
+            content = data.get('content', None)
+        )
+
+        return HttpResponse(status = 200)
+
+    @login_required
+    def delete(self, request, inquiry_id):
+        user = Ask.objects.filter(id = inquiry_id)
+        user.delete()
+
+        return HttpResponse(status = 200)
