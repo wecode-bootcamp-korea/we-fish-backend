@@ -1,6 +1,12 @@
-from django.urls import path
+from .views      import (
+    CategoryView,
+    DetailView,
+    SearchView,
+    ProductListView,
+    HoneyView
+)
 
-from .views      import CategoryView, DetailView, SearchView, ProductListView, HoneyView
+from django.urls import path
 
 urlpatterns = [
     path('/category_list', CategoryView.as_view()),

@@ -1,6 +1,13 @@
 import json
 
-from .models import Category, Theme, Review, Product, ThemeProduct, Section
+from .models import (
+    Category,
+    Theme,
+    Review,
+    Product,
+    ThemeProduct,
+    Section
+)
 
 from django.views import View
 from django.http  import HttpResponse, JsonResponse
