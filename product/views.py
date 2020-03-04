@@ -1,6 +1,6 @@
 import json
 
-from .models import Category, Theme, Review, Product, ProductCategory
+from .models import Category, Theme, Review, Product, ThemeProduct, Section
 
 from django.views import View
 from django.http  import HttpResponse, JsonResponse
@@ -10,12 +10,6 @@ class CategoryView(View):
         category_data = Category.objects.filter(is_real_category=True).values()
 
         return JsonResponse({'category_list':list(category_data)}, status = 200)
-
-class ThemeView(View):
-    def get(self, request):
-        theme_data = Theme.objects.values()
-
-        return JsonResponse({'themes':list(theme_data)}, status = 200)
 
 class ReviewView(View):
     def post(self, request):
@@ -70,3 +64,31 @@ class SearchView(View):
 
         except KeyError:
             return JsonResponse({"message":"INVALID_KEY"}, status = 400)
+
+class HoneyView(View):
+    def get(self, request):
+        section_id = request.GET.get('section_id', None)
+        section    = Section.objects.get(id = section_id)
+        honey_view = {
+            'id'     : section.id,
+            'name'   : section.name,
+            'theme' : [{
+                'id'        : theme.id,
+                'name'      : theme.name,
+                'tagline'   : theme.tagline,
+                'image_url' : theme.image_url,
+                'start_at'  : theme.start_at,
+                'end_at'    : theme.end_at,
+                'product'   : [{
+                    'id'        : product.product.id,
+                    'name'      : product.product.name,
+                    'price'     : product.product.price,
+                    'image_url' : product.product.image_url
+                } for product in ThemeProduct.objects.select_related('product', 'theme').filter(theme__id = theme.id)]
+            } for theme in Theme.objects.filter(section_id = section.id)]}
+
+        first_product_id = honey_view['theme'][0]['product'][0]['id']
+        if first_product_id:
+            return JsonResponse({"section_data" : honey_view}, status = 200)
+
+        return JsonResponse({"message":"Bad Request"}, status = 400)
