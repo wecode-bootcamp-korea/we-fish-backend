@@ -185,15 +185,15 @@ class AskView(View):
 
 class AskEditView(View):
     @login_required
-    def get(self, request, id):
-        user = Ask.objects.filter(id = id).values()
+    def get(self, request, inquiry_id):
+        user = Ask.objects.filter(id = inquiry_id).values()
 
         return JsonResponse({"ask_list" : list(user)}, status = 200)
 
     @login_required
-    def post(self, request, id):
+    def post(self, request, inquiry_id):
         data = json.loads(request.body)
-        user = Ask.objects.filter(id = id).values()
+        user = Ask.objects.filter(id = inquiry_id).values()
         user.update(
             title   = data.get('title', None),
             author  = request.user.name,
@@ -204,8 +204,8 @@ class AskEditView(View):
         return HttpResponse(status = 200)
 
     @login_required
-    def delete(self, request, id):
-        user = Ask.objects.filter(id = id)
+    def delete(self, request, inquiry_id):
+        user = Ask.objects.filter(id = inquiry_id)
         user.delete()
 
         return HttpResponse(status = 200)

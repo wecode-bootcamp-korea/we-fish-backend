@@ -24,10 +24,13 @@ class Verification(models.Model):
         db_table = 'verifications'
 
 class Ask(models.Model):
-    title   = models.CharField(max_length = 100, null = True)
-    author  = models.CharField(max_length = 50, null = True)
-    email   = models.CharField(max_length = 100, null = True)
-    content = models.TextField(max_length = 2000, null = True)
+    user       = models.ForeignKey(User, on_delete = models.SET_NULL, null = True)
+    title      = models.CharField(max_length = 100, null = True)
+    author     = models.CharField(max_length = 50, null = True)
+    email      = models.CharField(max_length = 100, null = True)
+    content    = models.TextField(max_length = 2000, null = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
     class Meta:
         db_table = 'asks'
