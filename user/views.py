@@ -100,11 +100,9 @@ class VerificationView(View):
             data = json.loads(request.body)
             mobile = data['mobile']
 
-            # 6자리 인증코드 생성
             digit = 6
             verification_code = ''.join(random.choice(string.digits) for x in range(digit))
 
-            # 휴대폰 번호 및 인증코드 저장
             user_data = Verification.objects.filter(mobile = mobile)
             if user_data.exists:
                 user_data.update(
@@ -118,7 +116,6 @@ class VerificationView(View):
                     count   = 0
                 ).save()
 
-            # 인증코드 발송 요청
             headers = {
                 "Content-Type"          : "application/json; charset=utf-8",
                 "x-ncp-auth-key"        : SMS['Access_Key'],
@@ -131,7 +128,7 @@ class VerificationView(View):
                 "countryCode"   : "",
                 "from"          : SMS['From'],
                 "to"            : [ mobile ],
-                "content"       : f"[we-fish] 인증 코드 [{verification_code}]를 입력해주세요."
+                "content"       : f"[we_fish] 인증 코드 [{verification_code}]를 입력해주세요."
             }
 
             requests.post(SMS['URL'], json = payload, headers = headers)

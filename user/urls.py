@@ -1,4 +1,12 @@
-from .views import SignUpView, SignInView, ProfileView, VerificationView, ConfirmationView, AskView, AskEditView
+from .views import(
+    SignUpView,
+    SignInView,
+    ProfileView,
+    VerificationView,
+    ConfirmationView,
+    AskView,
+    AskEditView
+)
 from django.urls import path
 
 urlpatterns = [
