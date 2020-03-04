@@ -55,6 +55,45 @@ class SignInView(View):
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
 
+class KakaoView(View):
+    def post(self, request):
+        data = json.loads(request.body)
+        access_token = data['token']
+
+        kakao_request = requests.get(
+            'https://kapi.kakao.com/v2/user/me',
+            headers = {
+                "Host"          : "kapi.kakao.com",
+                "Authorization" : f"Bearer {access_token}",
+                "Content-type"  : "application/x-www-from-urlencoded;charset=utf-8"
+            }
+        )
+
+        kakao_id = kakao_request.json().get('id')
+        try:
+            if User.objects.filter(kakao_id = kakao_id).exists():
+                user = User.objects.get(kakao_id = kakao_id)
+                token = jwt.encode({"user":user.id}, SECRET_KEY['secret'], algorithm = 'HS256')
+
+                return JsonResponse({"token":token.decode('utf-8')}, status = 200)
+
+            else:
+                User(
+                    kakao_id         = kakao_id,
+                    email            = data['email'],
+                    postcode         = data['postcode'],
+                    address          = data['address'],
+                    detailed_address = data.get('detailed_address', None),
+                ).save()
+
+                user = User.objects.get(kakao_id = kakao_id)
+                token = jwt.encode({"user":user.id}, SECRET_KEY['secret'], algorithm = 'HS256')
+
+                return JsonResponse({"token":token.decode('utf-8')}, status = 200)
+
+        except KeyError:
+            return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
+
 class ProfileView(View):
     @login_required
     def get(self, request):
