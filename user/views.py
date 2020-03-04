@@ -58,7 +58,7 @@ class SignInView(View):
 class KakaoView(View):
     def post(self, request):
         data = json.loads(request.body)
-        access_token = data['token']
+        access_token = request.headers['Authorization']
 
         kakao_request = requests.get(
             'https://kapi.kakao.com/v2/user/me',
