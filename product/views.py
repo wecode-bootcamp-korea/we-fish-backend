@@ -87,8 +87,4 @@ class HoneyView(View):
                 } for product in ThemeProduct.objects.select_related('product', 'theme').filter(theme__id = theme.id)]
             } for theme in Theme.objects.filter(section_id = section.id)]}
 
-        first_product_id = honey_view['theme'][0]['product'][0]['id']
-        if first_product_id:
-            return JsonResponse({"section_data" : honey_view}, status = 200)
-
-        return JsonResponse({"message":"Bad Request"}, status = 400)
+        return JsonResponse({"section_data" : honey_view}, status = 200)
