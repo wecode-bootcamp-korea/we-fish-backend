@@ -18,4 +18,5 @@ urlpatterns = [
     path('/confirm', ConfirmationView.as_view()),
     path('/ask', AskView.as_view()),
     path('/ask/<int:inquiry_id>', AskEditView.as_view()),
+    path('/kakao', KakaoView.as_view())
 ]

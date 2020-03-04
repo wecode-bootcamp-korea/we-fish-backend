@@ -1,13 +1,14 @@
 from django.db import models
 
 class User(models.Model):
+    kakao_id         = models.CharField(max_length = 50, null = True)
     email            = models.CharField(max_length = 100)
-    password         = models.CharField(max_length = 500)
-    name             = models.CharField(max_length = 50)
+    password         = models.CharField(max_length = 500, null = True)
+    name             = models.CharField(max_length = 50, null = True)
     postcode         = models.CharField(max_length = 30)
     address          = models.CharField(max_length = 300)
     detailed_address = models.CharField(max_length = 300, null = True)
-    mobile           = models.CharField(max_length = 50)
+    mobile           = models.CharField(max_length = 50, null = True)
     agreement        = models.BooleanField(null = True)
     created_at       = models.DateTimeField(auto_now_add = True)
     updated_at       = models.DateTimeField(auto_now = True)
