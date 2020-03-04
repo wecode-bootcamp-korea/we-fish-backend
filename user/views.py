@@ -66,7 +66,7 @@ class KakaoView(View):
                 "Authorization" : f"Bearer {access_token}",
                 "Content-type"  : "application/x-www-from-urlencoded;charset=utf-8"
             }
-        )
+        ,timeout = 2)
 
         kakao_id = kakao_request.json().get('id')
         try:
