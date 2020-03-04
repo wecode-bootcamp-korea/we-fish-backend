@@ -57,7 +57,6 @@ class SignInView(View):
 
 class KakaoView(View):
     def post(self, request):
-        data = json.loads(request.body)
         access_token = request.headers['Authorization']
 
         kakao_request = requests.get(
@@ -78,6 +77,7 @@ class KakaoView(View):
                 return JsonResponse({"token":token.decode('utf-8')}, status = 200)
 
             else:
+                data = json.loads(request.body)
                 User(
                     kakao_id         = kakao_id,
                     email            = data['email'],
