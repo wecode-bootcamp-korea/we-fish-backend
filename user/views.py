@@ -204,17 +204,18 @@ class AskView(View):
     def post(self, request):
         data = json.loads(request.body)
         Ask(
-            title   = data['title'],
-            author  = request.user.name,
-            email   = request.user.email,
-            content = data['content']
+            user_id = request.user.id,
+            title   = data.get('title', None),
+            author  = data.get('name', None),
+            email   = data.get('email', None),
+            content = data.get('content', None)
         ).save()
 
         return HttpResponse(status = 200)
 
     @login_required
     def get(self, request):
-        data = Ask.objects.filter(email = request.user.email).values()
+        data = Ask.objects.filter(user_id = request.user.id).values()
 
         return JsonResponse({"Ask" : list(data)}, status = 200)
 
