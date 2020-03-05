@@ -182,13 +182,13 @@ class ConfirmationView(View):
         data = json.loads(request.body)
         try:
             user = Verification.objects.get(mobile = data['mobile'])
-            if int(user.count) < 3:
+            if user.count < 3:
                 if data['code'] == user.code:
                     return JsonResponse({"message" : "Verification Succeed"}, status = 200)
 
                 user_data = Verification.objects.filter(mobile = data['mobile'])
                 user_data.update(
-                    count = int(user.count) + 1
+                    count = user.count + 1
                 )
 
                 return JsonResponse({"message" : "Try Again"}, status = 401)
