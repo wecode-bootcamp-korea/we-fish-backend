@@ -5,7 +5,8 @@ from .views import(
     VerificationView,
     ConfirmationView,
     AskView,
-    AskEditView
+    AskEditView,
+    KakaoView,
 )
 from django.urls import path
 
