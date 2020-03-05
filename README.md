@@ -6,7 +6,7 @@ By 6 developers (4 Front-End, 2 Back-End)
 
 
 # DB modeling
-![image](https://user-images.githubusercontent.com/58175076/75522267-ee490a80-5a4c-11ea-881f-01827044d692.png)
+![image](https://user-images.githubusercontent.com/58175076/75958430-8b012180-5eff-11ea-8059-77a568ef1c0a.png)
 
 &nbsp;
 &nbsp;
@@ -16,12 +16,14 @@ By 6 developers (4 Front-End, 2 Back-End)
 &nbsp;
 ### users
 - 가입 회원의 정보를 저장합니다.
-- 외부 실명인증을 통해 생년월일을 저장합니다.
 
 &nbsp;
-### user_qnas
+### user_asks
 - 1:1문의에 대한 기록을 남깁니다.
 
+&nbsp;
+### user_verifications
+- 휴대폰 인증에 대한 기록을 남깁니다.
 
 &nbsp;
 &nbsp;
@@ -46,11 +48,6 @@ By 6 developers (4 Front-End, 2 Back-End)
 - 상품과 카테고리는 외부키를 가져옵니다. 
 
 &nbsp;
-### sort_keywords
-- 상품의 정렬 순서를 저장합니다.
-- 연결 관계가 없는 별도의 테이블로 관리합니다.
-
-&nbsp;
 ### dates
 - 상품 배송이 가능한 날짜를 저장합니다.
 - 오늘 이후 5일을 도착 날짜포 표시할 수 있습니다.
@@ -61,10 +58,6 @@ By 6 developers (4 Front-End, 2 Back-End)
 - 상품과 날짜는 외부키를 가져옵니다.
 - 상품의 날짜별 수량이 없어지면 배송가능 날짜가 다음날로 바뀝니다.
 
-
-&nbsp;
-### sections
-- 섹션 정보를 저장합니다.
 
 &nbsp;
 ### sections
@@ -112,4 +105,3 @@ By 6 developers (4 Front-End, 2 Back-End)
 ### addresses
 - 배송 가능 지역 목록을 저장합니다.
 - 회원가입시, 배송지 변경시 우편번호로 배송 가능 여부를 판단할 수 있습니다.
-
