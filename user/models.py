@@ -17,9 +17,11 @@ class User(models.Model):
         db_table = 'users'
 
 class Verification(models.Model):
-    mobile  = models.CharField(max_length = 50, null = True)
-    code    = models.CharField(max_length = 20, null = True)
-    count   = models.CharField(max_length = 20, null = True)
+    mobile     = models.CharField(max_length = 50, null = True)
+    code       = models.CharField(max_length = 20, null = True)
+    count      = models.IntegerField(null = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
 
     class Meta:
         db_table = 'verifications'

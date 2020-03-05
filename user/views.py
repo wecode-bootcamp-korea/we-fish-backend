@@ -182,13 +182,13 @@ class ConfirmationView(View):
         data = json.loads(request.body)
         try:
             user = Verification.objects.get(mobile = data['mobile'])
-            if int(user.count) < 3:
+            if user.count < 3:
                 if data['code'] == user.code:
                     return JsonResponse({"message" : "Verification Succeed"}, status = 200)
 
                 user_data = Verification.objects.filter(mobile = data['mobile'])
                 user_data.update(
-                    count = int(user.count) + 1
+                    count = user.count + 1
                 )
 
                 return JsonResponse({"message" : "Try Again"}, status = 401)
@@ -204,17 +204,18 @@ class AskView(View):
     def post(self, request):
         data = json.loads(request.body)
         Ask(
-            title   = data['title'],
-            author  = request.user.name,
-            email   = request.user.email,
-            content = data['content']
+            user_id = request.user.id,
+            title   = data.get('title', None),
+            author  = data.get('name', None),
+            email   = data.get('email', None),
+            content = data.get('content', None)
         ).save()
 
         return HttpResponse(status = 200)
 
     @login_required
     def get(self, request):
-        data = Ask.objects.filter(email = request.user.email).values()
+        data = Ask.objects.filter(user_id = request.user.id).values()
 
         return JsonResponse({"Ask" : list(data)}, status = 200)
 
