@@ -11,10 +11,12 @@ class CartView(View):
     def post(self, request):
         data = json.loads(request.body)['cart']
         order = Order.objects.create(user_id = request.user.id)
+        cart_list = []
         for row in data:
-            Cart.objects.create(
+            cart_list.append(Cart(
                 product_id = row['product_id'],
                 quantity   = row['quantity'],
-                order_id   = order.id)
+                order      = order))
+        Cart.objects.bulk_create(cart_list)
 
         return JsonResponse({"order_number":order.order_number}, status = 200)
