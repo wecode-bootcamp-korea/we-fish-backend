@@ -5,7 +5,6 @@ from user.utils import login_required
 
 from django.views import View
 from django.http  import JsonResponse, HttpResponse
-
 from django.db import IntegrityError, transaction
 from django.db.models import Sum
 
