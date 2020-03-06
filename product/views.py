@@ -1,6 +1,7 @@
 import json
 
-from .models import (
+from order.models import Order
+from .models      import (
     Category,
     Theme,
     Review,
@@ -9,8 +10,8 @@ from .models import (
     Section
 )
 
-from django.views import View
-from django.http  import HttpResponse, JsonResponse
+from django.views          import View
+from django.http           import HttpResponse, JsonResponse
 
 class CategoryView(View):
     def get(self, request):
@@ -19,23 +20,28 @@ class CategoryView(View):
         return JsonResponse({'category_list':list(category_data)}, status = 200)
 
 class ReviewView(View):
-    def post(self, request):
+    def post(self, request, order_number):
         try:
             data = json.loads(request.body)
-
+            order = Order.objects.get(order_number = order_number)
             Review(
                 product_id = data['product_id'],
                 user_id    = data['user_id'],
-#                order_id   = data['order_id'],
+                order_id   = order,
                 rate       = data['rate'],
                 content    = data['content'],
-                image_url  = data['image']
+                image_url  = data['image_url']
             ).save()
 
             return HttpResponse(status = 200)
 
         except KeyError:
             return JsonResponse({"message":"INVALID_KEYS"}, status = 400)
+
+    def get(self, request):
+        data = Review.objects.all()
+
+        return JsonResponse({"review":list(data)}, status = 200)
 
 class DetailView(View):
     def get(self, request, product_id):

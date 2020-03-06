@@ -3,7 +3,8 @@ from .views      import (
     DetailView,
     SearchView,
     ProductListView,
-    HoneyView
+    HoneyView,
+    ReviewView,
 )
 
 from django.urls import path
@@ -14,4 +15,5 @@ urlpatterns = [
     path('', ProductListView.as_view()),
     path('/search', SearchView.as_view()),
     path('/honey', HoneyView.as_view()),
+    path('/review', ReviewView.as_view()),
 ]

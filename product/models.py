@@ -1,5 +1,6 @@
 from user.models  import User
-# from order.models import Order
+from order.models import Order
+
 from django.db    import models
 
 class Category(models.Model):
@@ -28,7 +29,7 @@ class Product(models.Model):
         db_table = 'products'
 
 class ProductCategory(models.Model):
-    product  = models.ForeignKey(Product, on_delete = models.CASCADE, null=True)
+    product  = models.ForeignKey('Product', on_delete = models.CASCADE, null=True)
     category = models.ForeignKey(Category, on_delete = models.CASCADE, null=True)
 
     class Meta:
@@ -41,7 +42,7 @@ class Date(models.Model):
         db_table = 'dates'
 
 class Stock(models.Model):
-    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
+    product = models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
     date    = models.ForeignKey(Date, on_delete = models.SET_NULL, null=True)
     stock   = models.IntegerField(null = True)
 
@@ -68,15 +69,15 @@ class Theme(models.Model):
 
 class ThemeProduct(models.Model):
     theme   = models.ForeignKey(Theme, on_delete = models.SET_NULL, null=True)
-    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
+    product = models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'theme_products'
 
 class Review(models.Model):
-    product    = models.ForeignKey(Product, on_delete = models.SET_NULL, null=True)
+    product    = models.ForeignKey('Product', on_delete = models.SET_NULL, null=True)
     user       = models.ForeignKey(User, on_delete = models.SET_NULL, null=True)
-    # order      = models.ForeignKey('Order', on_delete = models.SET_NULL, null=True)
+    order      = models.ForeignKey(Order, on_delete = models.SET_NULL, null=True)
     rate       = models.IntegerField(null=True)
     content    = models.TextField(null=True)
     image_url  = models.URLField(max_length = 2000, null=True)
