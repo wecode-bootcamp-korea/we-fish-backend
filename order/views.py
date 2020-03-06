@@ -59,3 +59,28 @@ class CartDetailView(View):
 
         except IntegrityError:
             return JsonResponse({"message":"Try again"}, status = 400)
+
+class OrderCompleteView(View):
+    @login_required
+    def get(self, request, order_number):
+        data = Order.objects.select_related('delivery_date').filter(order_number=order_number)
+        products = Cart.objects.select_related('order', 'product').filter(order__order_number=order_number)
+        quantity_total = products.aggregate(Sum('quantity'))
+        order_quantity = quantity_total['quantity__sum'] - 1
+        total_price = 0
+        for cart in products:
+            total_price += cart.product.price * cart.quantity
+
+        product_info = f"{products[0].product.name} 외 {order_quantity}건"
+        data.update(
+            total_price = total_price, product_info = product_info)
+        order_data = {
+            '주문번호' : order_number,
+            '배송일'   : data[0].delivery_date.date,
+            '결제금액' : total_price
+        }
+
+        return JsonResponse({
+            "order_status" : "주문이 완료되었습니다.",
+            "order_info" : order_data
+        }, status = 200)
