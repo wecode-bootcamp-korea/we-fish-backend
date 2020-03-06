@@ -233,8 +233,8 @@ class AskEditView(View):
         user = Ask.objects.filter(id = inquiry_id).values()
         user.update(
             title   = data.get('title', None),
-            author  = request.user.name,
-            email   = request.user.email,
+            author  = data.get('name', None),
+            email   = data.get('email', None),
             content = data.get('content', None)
         )
 
