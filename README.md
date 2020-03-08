@@ -110,7 +110,7 @@
 </details>
 &nbsp;
 &nbsp;
-
+&nbsp;
 # Technologies
 - Python
 - Django Web Framework
@@ -119,7 +119,7 @@
 - CORS headers
 &nbsp;
 &nbsp;
-
+&nbsp;
 # Features
 **Data**
 - 크롤링(BeautifulSoup, Selenium)
@@ -146,11 +146,12 @@
 
 
 
-
+&nbsp;
 &nbsp;
 &nbsp;
 # API Documentiaion
 [백엔드 엔드포인트 API](https://documenter.getpostman.com/view/10398614/SzRw2WX9?version=latest)
+&nbsp;
 &nbsp;
 &nbsp;
 # Contact
