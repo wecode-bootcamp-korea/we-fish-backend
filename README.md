@@ -7,14 +7,14 @@
 
 
 # DB modeling
-![image](https://user-images.githubusercontent.com/58175076/75958430-8b012180-5eff-11ea-8059-77a568ef1c0a.png)
+![image](오늘회db_final.png)
 
 &nbsp;
 &nbsp;
 &nbsp;
 
 <details markdown = "1">
-    <summary>User Tables</summary>
+<summary>User Tables</summary>
 
 &nbsp;
 ### users
@@ -31,7 +31,7 @@
 &nbsp;
 &nbsp;
 <details markdown = "1">
-    <summary>Product Tables</summary>
+<summary>Product Tables</summary>
 
 &nbsp;
 ### categories
@@ -88,7 +88,7 @@
 &nbsp;
 
 <details markdown = "1">
-    <summary>Order Tables</summary>
+<summary>Order Tables</summary>
 
 &nbsp;
 ### carts
@@ -110,10 +110,12 @@
 </details>
 &nbsp;
 &nbsp;
+
 # Technologies
 - Python
 - Django Web Framework
-- AWS E2C, RDS
+- MySQL
+- AWS EC2, RDS
 - CORS headers
 &nbsp;
 &nbsp;
@@ -123,11 +125,27 @@
 - 크롤링(BeautifulSoup, Selenium)
 
 **User**
-- 회원가입, 로그인 (Bcrypt, JWT)
-- 소셜로그인(Kakao)
-- 휴대폰 인증
+- 회원가입, 로그인(Bcrypt, JWT)
+- 소셜로그인(Kakao API)
+- 휴대폰 인증(Naver API)
 - 내 정보 관리
 - 1:1 문의
+
+**Product**
+- 카테고리 보기
+- 카테고리내 상품 목록 보기(정렬 방식 선택 가능)
+- 상품 상세 보기
+- 상품후기 작성
+- 상품후기 보기
+
+**Order**
+- 장바구니 담기
+- 장바구니 보기
+- 장바구니 상품 수정
+- 주문완료 내용 보기
+
+
+
 
 &nbsp;
 &nbsp;

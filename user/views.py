@@ -206,7 +206,7 @@ class AskView(View):
         Ask(
             user_id = request.user.id,
             title   = data.get('title', None),
-            author  = data.get('name', None),
+            author  = data.get('author', None),
             email   = data.get('email', None),
             content = data.get('content', None)
         ).save()
@@ -233,7 +233,7 @@ class AskEditView(View):
         user = Ask.objects.filter(id = inquiry_id).values()
         user.update(
             title   = data.get('title', None),
-            author  = data.get('name', None),
+            author  = data.get('author', None),
             email   = data.get('email', None),
             content = data.get('content', None)
         )

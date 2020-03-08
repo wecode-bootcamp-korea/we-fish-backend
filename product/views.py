@@ -20,7 +20,7 @@ class CategoryView(View):
         return JsonResponse({'category_list':list(category_data)}, status = 200)
 
 class ReviewView(View):
-    def post(self, request, order_number):
+    def post(self, request):
         try:
             data = json.loads(request.body)
             order = Order.objects.get(order_number = order_number)
