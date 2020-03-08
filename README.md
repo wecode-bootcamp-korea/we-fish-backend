@@ -5,6 +5,9 @@
 - 팀 구성 : 프론트엔드 4명, 백엔드 2명 (총 6명) 
 - [we-fish-FrontEnd GitHub Repository &#128205;](https://github.com/wecode-bootcamp-korea/we-fish-frontend)
 
+&nbsp;
+&nbsp;
+&nbsp;
 
 # DB modeling
 ![image](오늘회db_final.png)
@@ -108,6 +111,8 @@
 - 배송 가능 지역 목록을 저장합니다.
 - 회원가입시, 배송지 변경시 우편번호로 배송 가능 여부를 판단할 수 있습니다.
 </details>
+
+&nbsp;
 &nbsp;
 &nbsp;
 
@@ -117,6 +122,8 @@
 - MySQL
 - AWS EC2, RDS
 - CORS headers
+
+&nbsp;
 &nbsp;
 &nbsp;
 
@@ -146,15 +153,20 @@
 
 
 
+&nbsp;
+&nbsp;
+&nbsp;
+
+# API Documentiaion
+[백엔드 엔드포인트 API](https://documenter.getpostman.com/view/10398614/SzRw2WX9?version=latest)
 
 &nbsp;
 &nbsp;
-# API Documentiaion
-[백엔드 엔드포인트 API](https://documenter.getpostman.com/view/10398614/SzRw2WX9?version=latest)
 &nbsp;
-&nbsp;
+
 # Contact
 - whybein : swhybeing@gmail.com
 - k904808 : k904808@gmail.com
+
 &nbsp;
 &nbsp;
