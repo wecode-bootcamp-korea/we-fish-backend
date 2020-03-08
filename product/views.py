@@ -61,7 +61,6 @@ class ProductListView(View):
                 'name'           : product.name,
                 'price'          : product.price
                 } for product in product_data ]
-        print(request.GET)
 
         return JsonResponse({"data" : product_list}, status = 200)
 
