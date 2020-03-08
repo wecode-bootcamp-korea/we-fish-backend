@@ -23,6 +23,7 @@ class ReviewView(View):
     def post(self, request):
         try:
             data = json.loads(request.body)
+            order_number = request.GET.get('order_number', None)
             order = Order.objects.get(order_number = order_number)
             Review(
                 product_id = data['product_id'],
@@ -60,6 +61,7 @@ class ProductListView(View):
                 'name'           : product.name,
                 'price'          : product.price
                 } for product in product_data ]
+        print(request.GET)
 
         return JsonResponse({"data" : product_list}, status = 200)
 
