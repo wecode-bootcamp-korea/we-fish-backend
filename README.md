@@ -3,7 +3,7 @@
 당일 배송 수산마켓 서비스 [오늘회 웹사이트](https://www.onul-hoi.com) 클론 프로젝트
 - 기간    : 20.02.24 - 20.03.06
 - 팀 구성 : 프론트엔드 4명, 백엔드 2명 (총 6명) 
-[we-fish-FrontEnd GitHub Repository &#128205;](https://github.com/wecode-bootcamp-korea/we-fish-frontend)
+- [we-fish-FrontEnd GitHub Repository &#128205;](https://github.com/wecode-bootcamp-korea/we-fish-frontend)
 
 
 # DB modeling
@@ -27,9 +27,9 @@
 &nbsp;
 ### user_verifications
 - 휴대폰 인증에 대한 기록을 남깁니다.
+</details>
 &nbsp;
 &nbsp;
-
 <details markdown = "1">
     <summary>Product Tables</summary>
 
@@ -129,14 +129,10 @@
 - 내 정보 관리
 - 1:1 문의
 
-**Product**
-
-**Order**
-
 &nbsp;
 &nbsp;
 # API Documentiaion
-[엔드포인트 API](https://documenter.getpostman.com/view/10398614/SzRw2WX9?version=latest)
+[백엔드 엔드포인트 API](https://documenter.getpostman.com/view/10398614/SzRw2WX9?version=latest)
 &nbsp;
 &nbsp;
 # Contact
