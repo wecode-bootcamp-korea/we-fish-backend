@@ -1,8 +1,9 @@
 # Introduction
 
-website clone project (https://www.onul-hoi.com)
-By 6 developers (4 Front-End, 2 Back-End)
-
+당일 배송 수산마켓 서비스 [오늘회 웹사이트](https://www.onul-hoi.com) 클론 프로젝트
+- 기간    : 20.02.24 - 20.03.06
+- 팀 구성 : 프론트엔드 4명, 백엔드 2명 (총 6명) 
+[we-fish-FrontEnd GitHub Repository &#128205;](https://github.com/wecode-bootcamp-korea/we-fish-frontend)
 
 
 # DB modeling
@@ -11,7 +12,9 @@ By 6 developers (4 Front-End, 2 Back-End)
 &nbsp;
 &nbsp;
 &nbsp;
-## 회원 관련 테이블
+
+<details markdown = "1">
+    <summary>User Tables</summary>
 
 &nbsp;
 ### users
@@ -24,11 +27,11 @@ By 6 developers (4 Front-End, 2 Back-End)
 &nbsp;
 ### user_verifications
 - 휴대폰 인증에 대한 기록을 남깁니다.
+&nbsp;
+&nbsp;
 
-&nbsp;
-&nbsp;
-&nbsp;
-## 상품 관련 테이블
+<details markdown = "1">
+    <summary>Product Tables</summary>
 
 &nbsp;
 ### categories
@@ -80,13 +83,12 @@ By 6 developers (4 Front-End, 2 Back-End)
 - 상품명, 작성자, 주문번호는 외부키를 가져옵니다.
 - 상품별 후기를 가져올 수 있습니다.
 - 주문번호에 해당하는 후기를 가져올 수 있습니다.
-
+</details>
 &nbsp;
 &nbsp;
-&nbsp;
 
-
-## 주문 관련 테이블
+<details markdown = "1">
+    <summary>Order Tables</summary>
 
 &nbsp;
 ### carts
@@ -105,3 +107,40 @@ By 6 developers (4 Front-End, 2 Back-End)
 ### addresses
 - 배송 가능 지역 목록을 저장합니다.
 - 회원가입시, 배송지 변경시 우편번호로 배송 가능 여부를 판단할 수 있습니다.
+</details>
+&nbsp;
+&nbsp;
+# Technologies
+- Python
+- Django Web Framework
+- AWS E2C, RDS
+- CORS headers
+&nbsp;
+&nbsp;
+
+# Features
+**Data**
+- 크롤링(BeautifulSoup, Selenium)
+
+**User**
+- 회원가입, 로그인 (Bcrypt, JWT)
+- 소셜로그인(Kakao)
+- 휴대폰 인증
+- 내 정보 관리
+- 1:1 문의
+
+**Product**
+
+**Order**
+
+&nbsp;
+&nbsp;
+# API Documentiaion
+[엔드포인트 API](https://documenter.getpostman.com/view/10398614/SzRw2WX9?version=latest)
+&nbsp;
+&nbsp;
+# Contact
+- whybein : swhybeing@gmail.com
+- k904808 : k904808@gmail.com
+&nbsp;
+&nbsp;
